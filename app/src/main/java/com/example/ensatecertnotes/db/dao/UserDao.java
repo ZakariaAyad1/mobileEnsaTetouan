@@ -1,5 +1,6 @@
 package com.example.ensatecertnotes.db.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,5 +33,14 @@ public class UserDao {
             return user;
         }
         return null;
+    }
+
+    public long createUser(String email, String password, String role) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("email", email);
+        values.put("password", password);
+        values.put("role", role);
+        return db.insert("users", null, values);
     }
 }

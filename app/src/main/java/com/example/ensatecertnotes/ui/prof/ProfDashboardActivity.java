@@ -55,6 +55,16 @@ public class ProfDashboardActivity extends AppCompatActivity {
 
         btnLogout.setOnClickListener(v -> session.logoutUser());
 
+        findViewById(R.id.btn_add_module_shortcut).setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(this, AddModuleActivity.class);
+            startActivity(intent);
+        });
+
+        findViewById(R.id.btn_manage_students).setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(this, ManageStudentsActivity.class);
+            startActivity(intent);
+        });
+
         loadProfData();
     }
 

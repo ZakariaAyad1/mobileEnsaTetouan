@@ -48,11 +48,28 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleView
         });
 
         holder.tvStats.setOnClickListener(v -> {
-            Intent intent = new Intent(context, com.example.ensatecertnotes.ui.prof.ModuleStatsActivity.class);
+            android.content.Intent intent = new android.content.Intent(context,
+                    com.example.ensatecertnotes.ui.prof.ModuleStatsActivity.class);
             intent.putExtra("MODULE_ID", module.getId());
             intent.putExtra("MODULE_NAME", module.getNomModule());
             context.startActivity(intent);
         });
+
+        // Edit Module
+        holder.itemView.setOnLongClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(context,
+                    com.example.ensatecertnotes.ui.prof.AddModuleActivity.class);
+            intent.putExtra("MODULE_ID", module.getId());
+            context.startActivity(intent);
+            return true;
+        });
+
+        // Or we can add an explicit "Modifier" button if we want to be more
+        // user-friendly
+        // For now, let's stick to the plan: edit and delete options.
+        // I will add a click listener to the "Gérer >" text for standard management
+        // (students)
+        // and maybe an icon for delete.
     }
 
     @Override
