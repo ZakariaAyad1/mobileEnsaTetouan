@@ -26,8 +26,10 @@ public class ProfDashboardActivity extends AppCompatActivity {
     private ModuleDao moduleDao;
 
     private TextView tvName, tvDept;
+    private TextView tvStatModules, tvStatEtudiants, tvStatValidation;
     private RecyclerView rvModules;
     private Button btnLogout;
+    private com.example.ensatecertnotes.db.dao.NoteDao noteDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +41,15 @@ public class ProfDashboardActivity extends AppCompatActivity {
 
         professeurDao = new ProfesseurDao(this);
         moduleDao = new ModuleDao(this);
+        noteDao = new com.example.ensatecertnotes.db.dao.NoteDao(this);
 
         tvName = findViewById(R.id.tv_prof_name);
         tvDept = findViewById(R.id.tv_prof_dept);
+
+        tvStatModules = findViewById(R.id.tv_stat_modules);
+        tvStatEtudiants = findViewById(R.id.tv_stat_etudiants);
+        tvStatValidation = findViewById(R.id.tv_stat_validation);
+
         rvModules = findViewById(R.id.rv_modules);
         btnLogout = findViewById(R.id.btn_logout);
 
@@ -59,10 +67,24 @@ public class ProfDashboardActivity extends AppCompatActivity {
             tvDept.setText("Département " + prof.getDepartement());
 
             loadModules(prof.getId());
+            loadStatistics(prof.getId());
         } else {
             Toast.makeText(this, "Erreur : Profil professeur introuvable", Toast.LENGTH_LONG).show();
-            // session.logoutUser(); // Optional safety
         }
+    }
+
+    private void loadStatistics(int profId) {
+        // 1. Modules Count
+        List<Module> modules = moduleDao.getModulesByProfesseur(profId);
+        tvStatModules.setText(String.valueOf(modules.size())); // Already fetched, can just size() or query
+
+        // 2. Students Count
+        int studentCount = moduleDao.countStudentsByProfesseur(profId);
+        tvStatEtudiants.setText(String.valueOf(studentCount));
+
+        // 3. Validation Rate
+        double validationRate = noteDao.getValidationRateByProfesseur(profId);
+        tvStatValidation.setText(String.format(java.util.Locale.US, "%.0f%%", validationRate));
     }
 
     private void loadModules(int profId) {
@@ -77,6 +99,8 @@ public class ProfDashboardActivity extends AppCompatActivity {
         super.onResume();
         if (!session.isLoggedIn()) {
             finish();
+            return;
         }
+        loadProfData(); // Refresh stats and modules list
     }
 }

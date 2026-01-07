@@ -316,32 +316,42 @@ GROUP BY e.id;
 -- TRIGGERS pour automatiser certaines tâches
 -- ============================================
 
--- Trigger: Calculer automatiquement la note finale
-CREATE TRIGGER calculate_note_finale
+-- Trigger: Calculer automatiquement la note finale et le statut (INSERT)
+CREATE TRIGGER calculate_stats_insert
 AFTER INSERT ON notes
 FOR EACH ROW
-WHEN NEW.note_finale IS NULL
 BEGIN
     UPDATE notes
     SET note_finale = (
         COALESCE(NEW.note_examen, 0) * 0.4 + 
         COALESCE(NEW.note_td, 0) * 0.3 + 
         COALESCE(NEW.note_tp, 0) * 0.3
-    )
+    ),
+    statut = CASE 
+        WHEN (COALESCE(NEW.note_examen, 0) * 0.4 + COALESCE(NEW.note_td, 0) * 0.3 + COALESCE(NEW.note_tp, 0) * 0.3) >= 10 THEN 'VALIDE'
+        WHEN (COALESCE(NEW.note_examen, 0) * 0.4 + COALESCE(NEW.note_td, 0) * 0.3 + COALESCE(NEW.note_tp, 0) * 0.3) >= 7 THEN 'RATTRAPAGE'
+        ELSE 'NON_VALIDE'
+    END
     WHERE id = NEW.id;
 END;
 
--- Trigger: Définir automatiquement le statut selon la note finale
-CREATE TRIGGER set_statut_validation
-AFTER UPDATE OF note_finale ON notes
+-- Trigger: Calculer automatiquement la note finale et le statut (UPDATE)
+CREATE TRIGGER calculate_stats_update
+AFTER UPDATE OF note_examen, note_td, note_tp ON notes
 FOR EACH ROW
 BEGIN
     UPDATE notes
-    SET statut = CASE 
-        WHEN NEW.note_finale >= 10 THEN 'VALIDE'
+    SET note_finale = (
+        COALESCE(NEW.note_examen, 0) * 0.4 + 
+        COALESCE(NEW.note_td, 0) * 0.3 + 
+        COALESCE(NEW.note_tp, 0) * 0.3
+    ),
+    statut = CASE 
+        WHEN (COALESCE(NEW.note_examen, 0) * 0.4 + COALESCE(NEW.note_td, 0) * 0.3 + COALESCE(NEW.note_tp, 0) * 0.3) >= 10 THEN 'VALIDE'
+        WHEN (COALESCE(NEW.note_examen, 0) * 0.4 + COALESCE(NEW.note_td, 0) * 0.3 + COALESCE(NEW.note_tp, 0) * 0.3) >= 7 THEN 'RATTRAPAGE'
         ELSE 'NON_VALIDE'
     END
-    WHERE id = NEW.id AND statut IS NULL;
+    WHERE id = NEW.id;
 END;
 
 -- Trigger: Créer une notification lors d'une nouvelle note
@@ -380,55 +390,76 @@ END;
 -- DONNÉES DE TEST
 -- ============================================
 
--- Insertion utilisateurs de test
-INSERT INTO users (email, password, role) VALUES
-('ahmed.alami@ensa.ma', 'prof123', 'PROFESSEUR'),
-('fatima.benali@ensa.ma', 'prof123', 'PROFESSEUR'),
-('sara.benani@etu.ensa.ma', 'etu123', 'ETUDIANT'),
-('karim.mansouri@etu.ensa.ma', 'etu123', 'ETUDIANT'),
-('amina.amrani@ensa.ma', 'admin123', 'AGENT'),
-('omar.idrissi@ensa.ma', 'manager123', 'MANAGER');
+-- Insertion utilisateurs de test (Titulaires)
+INSERT INTO users (id, email, password, role) VALUES
+(1, 'ahmed.alami@ensa.ma', 'prof123', 'PROFESSEUR'),
+(2, 'fatima.benali@ensa.ma', 'prof123', 'PROFESSEUR'),
+(3, 'sara.benani@etu.ensa.ma', 'etu123', 'ETUDIANT'),
+(4, 'karim.mansouri@etu.ensa.ma', 'etu123', 'ETUDIANT'),
+(5, 'amina.amrani@ensa.ma', 'admin123', 'AGENT'),
+(6, 'omar.idrissi@ensa.ma', 'manager123', 'MANAGER'),
+(7, 'yassine.mabrouk@etu.ensa.ma', 'etu123', 'ETUDIANT'),
+(8, 'leila.tazi@etu.ensa.ma', 'etu123', 'ETUDIANT');
 
 -- Insertion professeurs
-INSERT INTO professeurs (user_id, nom, prenom, departement) VALUES
-(1, 'ALAMI', 'Ahmed', 'Informatique'),
-(2, 'BENALI', 'Fatima', 'Mathématiques');
+INSERT INTO professeurs (id, user_id, nom, prenom, departement) VALUES
+(1, 1, 'ALAMI', 'Ahmed', 'Informatique'),
+(2, 2, 'BENALI', 'Fatima', 'Mathématiques');
 
 -- Insertion étudiants
-INSERT INTO etudiants (user_id, cne, nom, prenom, filiere, annee_etude) VALUES
-(3, 'R123456789', 'BENANI', 'Sara', 'Génie Informatique', '3ème année'),
-(4, 'R987654321', 'MANSOURI', 'Karim', 'Génie Informatique', '3ème année');
+INSERT INTO etudiants (id, user_id, cne, nom, prenom, filiere, annee_etude) VALUES
+(1, 3, 'R123456789', 'BENANI', 'Sara', 'Génie Informatique', '3ème année'),
+(2, 4, 'R987654321', 'MANSOURI', 'Karim', 'Génie Informatique', '3ème année'),
+(3, 7, 'R111222333', 'MABROUK', 'Yassine', 'Génie Informatique', '3ème année'),
+(4, 8, 'R444555666', 'TAZI', 'Leila', 'Génie Informatique', '3ème année');
 
 -- Insertion admins
-INSERT INTO admins (user_id, nom, prenom, fonction) VALUES
-(5, 'AMRANI', 'Amina', 'AGENT_SCOLARITE'),
-(6, 'IDRISSI', 'Omar', 'MANAGER');
+INSERT INTO admins (id, user_id, nom, prenom, fonction) VALUES
+(1, 5, 'AMRANI', 'Amina', 'AGENT_SCOLARITE'),
+(2, 6, 'IDRISSI', 'Omar', 'MANAGER');
 
 -- Insertion modules
-INSERT INTO modules (code_module, nom_module, semestre, coefficient, professeur_id, annee_universitaire) VALUES
-('INF301', 'Programmation Orientée Objet', 5, 2.0, 1, '2024-2025'),
-('INF302', 'Base de Données', 5, 2.0, 1, '2024-2025'),
-('MAT301', 'Analyse Numérique', 5, 1.5, 2, '2024-2025'),
-('INF303', 'Réseaux Informatiques', 5, 2.0, 1, '2024-2025');
+INSERT INTO modules (id, code_module, nom_module, semestre, coefficient, professeur_id, annee_universitaire) VALUES
+(1, 'INF301', 'Programmation Orientée Objet', 5, 2.0, 1, '2024-2025'),
+(2, 'INF302', 'Base de Données', 5, 2.0, 1, '2024-2025'),
+(3, 'MAT301', 'Analyse Numérique', 5, 1.5, 2, '2024-2025'),
+(4, 'INF303', 'Réseaux Informatiques', 5, 2.0, 1, '2024-2025');
 
--- Insertion inscriptions
+-- Insertion inscriptions (S'assurer que tous les étudiants sont inscrits aux modules de Prof Alami)
 INSERT INTO inscriptions (etudiant_id, module_id, annee_universitaire) VALUES
-(1, 1, '2024-2025'),
-(1, 2, '2024-2025'),
-(1, 3, '2024-2025'),
-(1, 4, '2024-2025'),
-(2, 1, '2024-2025'),
-(2, 2, '2024-2025'),
-(2, 3, '2024-2025'),
-(2, 4, '2024-2025');
+(1, 1, '2024-2025'), (1, 2, '2024-2025'), (1, 4, '2024-2025'),
+(2, 1, '2024-2025'), (2, 2, '2024-2025'), (2, 4, '2024-2025'),
+(3, 1, '2024-2025'), (3, 2, '2024-2025'),
+(4, 1, '2024-2025'), (4, 2, '2024-2025');
 
--- Insertion notes
+-- Insertion notes (Diversifiées pour tester les statistiques)
+-- Note Finale attendue = Examen*0.4 + TD*0.3 + TP*0.3
+
+-- Sara (Valide tout)
 INSERT INTO notes (etudiant_id, module_id, note_examen, note_td, note_tp) VALUES
-(1, 1, 15.5, 16.0, 17.0),
-(1, 2, 14.0, 13.5, 15.0),
-(1, 3, 12.0, 11.5, 13.0),
-(2, 1, 13.0, 14.0, 12.5),
-(2, 2, 16.0, 15.5, 17.0);
+(1, 1, 15.0, 16.0, 17.0), -- Finale: 15.9 (VALIDE)
+(1, 2, 14.0, 13.0, 15.0), -- Finale: 14.0 (VALIDE)
+(1, 4, 12.0, 11.0, 14.0); -- Finale: 12.3 (VALIDE)
+
+-- Karim (Rattrapage / Échec)
+INSERT INTO notes (etudiant_id, module_id, note_examen, note_td, note_tp) VALUES
+(2, 1, 8.0, 9.0, 10.0),   -- Finale: 8.7 (RATTRAPAGE)
+(2, 2, 5.0, 6.0, 4.0),    -- Finale: 5.0 (NON_VALIDE)
+(2, 4, 7.0, 7.0, 7.0);    -- Finale: 7.0 (RATTRAPAGE)
+
+-- Yassine (Mixte)
+INSERT INTO notes (etudiant_id, module_id, note_examen, note_td, note_tp) VALUES
+(3, 1, 11.0, 11.0, 11.0),  -- Finale: 11.0 (VALIDE)
+(3, 2, 8.0, 8.0, 8.0);     -- Finale: 8.0 (RATTRAPAGE)
+
+-- Leila (Excellent)
+INSERT INTO notes (etudiant_id, module_id, note_examen, note_td, note_tp) VALUES
+(4, 1, 19.0, 18.0, 17.0),  -- Finale: 18.1 (VALIDE)
+(4, 2, 17.0, 16.0, 18.0);  -- Finale: 17.0 (VALIDE)
+
+-- ============================================
+-- FIN DES DONNÉES DE TEST
+-- ============================================
 
 -- Insertion demandes de certificats
 INSERT INTO demandes_certificats (etudiant_id, type_certificat, motif) VALUES

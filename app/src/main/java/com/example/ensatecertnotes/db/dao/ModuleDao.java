@@ -41,4 +41,22 @@ public class ModuleDao {
         }
         return modules;
     }
+
+    public int countStudentsByProfesseur(int professeurId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        // Count distinct students enrolled in modules taught by this professor
+        String sql = "SELECT COUNT(DISTINCT i.etudiant_id) " +
+                "FROM inscriptions i " +
+                "JOIN modules m ON i.module_id = m.id " +
+                "WHERE m.professeur_id = ?";
+        Cursor cursor = db.rawQuery(sql, new String[] { String.valueOf(professeurId) });
+        int count = 0;
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                count = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+        return count;
+    }
 }

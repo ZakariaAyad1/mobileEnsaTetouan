@@ -46,6 +46,13 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleView
             intent.putExtra("MODULE_NAME", module.getNomModule());
             context.startActivity(intent);
         });
+
+        holder.tvStats.setOnClickListener(v -> {
+            Intent intent = new Intent(context, com.example.ensatecertnotes.ui.prof.ModuleStatsActivity.class);
+            intent.putExtra("MODULE_ID", module.getId());
+            intent.putExtra("MODULE_NAME", module.getNomModule());
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -54,13 +61,14 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleView
     }
 
     public static class ModuleViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvCode, tvSemestre;
+        TextView tvName, tvCode, tvSemestre, tvStats;
 
         public ModuleViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_module_name);
             tvCode = itemView.findViewById(R.id.tv_module_code);
             tvSemestre = itemView.findViewById(R.id.tv_module_semestre);
+            tvStats = itemView.findViewById(R.id.btn_stats_module);
         }
     }
 }

@@ -15,7 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "certifnotes.db";
     // Si vous modifiez db.sql, incrémentez cette version pour forcer la mise à jour
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     private static final String TAG = "DatabaseHelper";
     private final Context context;
 
@@ -38,6 +38,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super.onConfigure(db);
         // Active les contraintes de clés étrangères (Foreign Keys)
         db.setForeignKeyConstraintsEnabled(true);
+        // Active les triggers récursifs (important pour les triggers chaînés)
+        db.execSQL("PRAGMA recursive_triggers = ON;");
     }
 
     @Override

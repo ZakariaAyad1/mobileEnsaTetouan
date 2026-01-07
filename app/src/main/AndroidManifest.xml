@@ -25,6 +25,7 @@
         <activity android:name=".ui.prof.ProfDashboardActivity" />
         <activity android:name=".ui.prof.ListeEtudiantsActivity" />
         <activity android:name=".ui.prof.SaisieNoteActivity" />
+        <activity android:name=".ui.prof.ModuleStatsActivity" />
 
     </application>
 
