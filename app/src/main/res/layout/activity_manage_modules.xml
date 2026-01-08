@@ -3,49 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_liste"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#3F51B5"
+            android:background="?attr/colorPrimary"
+            app:title="Gérer mes Modules"
             app:titleTextColor="@color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#3F51B5"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/tv_module_title"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Module : ..."
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:hint="Rechercher un module (Nom ou Code)"
+                app:startIconDrawable="@android:drawable/ic_menu_search">
 
-            <TextView
-                android:id="@+id/tv_student_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0 étudiants inscrits"
-                android:textColor="#E0E0E0"
-                android:textSize="14sp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_search_module"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_etudiants"
+        android:id="@+id/rv_manage_modules"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp"
@@ -53,14 +51,13 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_enroll_student"
+        android:id="@+id/fab_add_module"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@android:drawable/ic_input_add"
         app:tint="@color/white"
-        app:backgroundTint="#4CAF50"
-        android:contentDescription="Enrôler un étudiant" />
+        android:contentDescription="Ajouter un module" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

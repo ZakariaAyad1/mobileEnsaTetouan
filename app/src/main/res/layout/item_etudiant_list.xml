@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -52,13 +53,31 @@
                     android:textColor="#757575"/>
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/btn_edit_etudiant"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_edit"
+                app:tint="#3F51B5"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Modifier" />
+
             <TextView
                 android:id="@+id/tv_status_grade"
                  android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Noter >"
                 android:textColor="#3F51B5"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"/>
+
+            <ImageView
+                android:id="@+id/btn_unenroll"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:tint="#F44336"
+                android:contentDescription="Désinscrire" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

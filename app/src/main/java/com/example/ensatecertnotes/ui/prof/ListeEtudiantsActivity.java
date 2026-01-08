@@ -1,5 +1,6 @@
 package com.example.ensatecertnotes.ui.prof;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,11 +44,20 @@ public class ListeEtudiantsActivity extends AppCompatActivity {
 
         tvModuleTitle.setText("Module : " + (moduleName != null ? moduleName : "Inconnu"));
 
+        findViewById(R.id.fab_enroll_student).setOnClickListener(v -> {
+            Intent intent = new Intent(this, EnrollStudentActivity.class);
+            intent.putExtra("MODULE_ID", moduleId);
+            startActivity(intent);
+        });
+
         loadEtudiants();
     }
 
     private void loadEtudiants() {
         List<Etudiant> etudiants = etudiantDao.getEtudiantsByModule(moduleId);
+        TextView tvCount = findViewById(R.id.tv_student_count);
+        tvCount.setText(etudiants.size() + " étudiants inscrits");
+
         if (etudiants.isEmpty()) {
             Toast.makeText(this, "Aucun étudiant inscrit à ce module.", Toast.LENGTH_SHORT).show();
         }
@@ -55,5 +65,11 @@ public class ListeEtudiantsActivity extends AppCompatActivity {
         EtudiantAdapter adapter = new EtudiantAdapter(this, etudiants, moduleId, moduleName);
         rvEtudiants.setLayoutManager(new LinearLayoutManager(this));
         rvEtudiants.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadEtudiants();
     }
 }

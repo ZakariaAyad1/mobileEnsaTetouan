@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -68,11 +69,21 @@
                     android:layout_marginEnd="8dp"/>
 
                 <TextView
+                    android:id="@+id/btn_manage_module"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gérer >"
                     android:textColor="#3F51B5"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"/>
+
+                <ImageView
+                    android:id="@+id/btn_delete_module"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@android:drawable/ic_menu_delete"
+                    app:tint="#F44336"
+                    android:contentDescription="Supprimer" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -20,10 +20,12 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleView
 
     private Context context;
     private List<Module> moduleList;
+    private com.example.ensatecertnotes.db.dao.ModuleDao moduleDao;
 
     public ModuleAdapter(Context context, List<Module> moduleList) {
         this.context = context;
         this.moduleList = moduleList;
+        this.moduleDao = new com.example.ensatecertnotes.db.dao.ModuleDao(context);
     }
 
     @NonNull
@@ -40,11 +42,30 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleView
         holder.tvCode.setText(module.getCodeModule());
         holder.tvSemestre.setText("Semestre " + module.getSemestre());
 
-        holder.itemView.setOnClickListener(v -> {
+        holder.btnManage.setOnClickListener(v -> {
             Intent intent = new Intent(context, ListeEtudiantsActivity.class);
             intent.putExtra("MODULE_ID", module.getId());
             intent.putExtra("MODULE_NAME", module.getNomModule());
             context.startActivity(intent);
+        });
+
+        holder.btnDelete.setOnClickListener(v -> {
+            new androidx.appcompat.app.AlertDialog.Builder(context)
+                    .setTitle("Supprimer le module")
+                    .setMessage(
+                            "Voulez-vous vraiment supprimer ce module ? Toutes les notes et inscriptions associées seront perdues.")
+                    .setPositiveButton("Oui", (dialog, which) -> {
+                        int res = moduleDao.deleteModule(module.getId());
+                        if (res > 0) {
+                            moduleList.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, moduleList.size());
+                            android.widget.Toast
+                                    .makeText(context, "Module supprimé.", android.widget.Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("Non", null)
+                    .show();
         });
 
         holder.tvStats.setOnClickListener(v -> {
@@ -78,7 +99,8 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleView
     }
 
     public static class ModuleViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvCode, tvSemestre, tvStats;
+        TextView tvName, tvCode, tvSemestre, tvStats, btnManage;
+        android.widget.ImageView btnDelete;
 
         public ModuleViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +108,8 @@ public class ModuleAdapter extends RecyclerView.Adapter<ModuleAdapter.ModuleView
             tvCode = itemView.findViewById(R.id.tv_module_code);
             tvSemestre = itemView.findViewById(R.id.tv_module_semestre);
             tvStats = itemView.findViewById(R.id.btn_stats_module);
+            btnManage = itemView.findViewById(R.id.btn_manage_module);
+            btnDelete = itemView.findViewById(R.id.btn_delete_module);
         }
     }
 }

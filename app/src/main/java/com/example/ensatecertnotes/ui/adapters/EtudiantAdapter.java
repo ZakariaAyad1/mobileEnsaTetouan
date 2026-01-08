@@ -22,12 +22,14 @@ public class EtudiantAdapter extends RecyclerView.Adapter<EtudiantAdapter.Etudia
     private List<Etudiant> etudiantList;
     private int moduleId;
     private String moduleName;
+    private com.example.ensatecertnotes.db.dao.InscriptionDao inscriptionDao;
 
     public EtudiantAdapter(Context context, List<Etudiant> etudiantList, int moduleId, String moduleName) {
         this.context = context;
         this.etudiantList = etudiantList;
         this.moduleId = moduleId;
         this.moduleName = moduleName;
+        this.inscriptionDao = new com.example.ensatecertnotes.db.dao.InscriptionDao(context);
     }
 
     @NonNull
@@ -52,6 +54,30 @@ public class EtudiantAdapter extends RecyclerView.Adapter<EtudiantAdapter.Etudia
             intent.putExtra("ETUDIANT_CNE", etudiant.getCne());
             context.startActivity(intent);
         });
+
+        holder.btnEdit.setOnClickListener(v -> {
+            Intent intent = new Intent(context, com.example.ensatecertnotes.ui.prof.AddStudentActivity.class);
+            intent.putExtra("STUDENT_ID", etudiant.getId());
+            context.startActivity(intent);
+        });
+
+        holder.btnUnenroll.setOnClickListener(v -> {
+            new androidx.appcompat.app.AlertDialog.Builder(context)
+                    .setTitle("Désinscrire l'étudiant")
+                    .setMessage("Voulez-vous vraiment retirer cet étudiant de ce module ?")
+                    .setPositiveButton("Oui", (dialog, which) -> {
+                        int res = inscriptionDao.unenrollStudent(etudiant.getId(), moduleId);
+                        if (res > 0) {
+                            etudiantList.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, etudiantList.size());
+                            android.widget.Toast
+                                    .makeText(context, "Étudiant retiré.", android.widget.Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("Non", null)
+                    .show();
+        });
     }
 
     @Override
@@ -61,12 +87,15 @@ public class EtudiantAdapter extends RecyclerView.Adapter<EtudiantAdapter.Etudia
 
     public static class EtudiantViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvCne, tvStatus;
+        android.widget.ImageView btnUnenroll, btnEdit;
 
         public EtudiantViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_etudiant_name);
             tvCne = itemView.findViewById(R.id.tv_etudiant_cne);
             tvStatus = itemView.findViewById(R.id.tv_status_grade);
+            btnUnenroll = itemView.findViewById(R.id.btn_unenroll);
+            btnEdit = itemView.findViewById(R.id.btn_edit_etudiant);
         }
     }
 }

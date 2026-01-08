@@ -23,12 +23,25 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     private Context context;
     private List<Etudiant> studentList;
-    private List<Etudiant> studentListFull; // For filtering
+    private OnStudentClickListener onStudentClickListener;
+    private boolean showEditButton = true;
 
     public StudentAdapter(Context context, List<Etudiant> studentList) {
         this.context = context;
         this.studentList = studentList;
-        this.studentListFull = new ArrayList<>(studentList);
+    }
+
+    public interface OnStudentClickListener {
+        void onStudentClick(Etudiant etudiant);
+    }
+
+    public void setOnStudentClickListener(OnStudentClickListener listener) {
+        this.onStudentClickListener = listener;
+    }
+
+    public void setShowEditButton(boolean show) {
+        this.showEditButton = show;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -46,11 +59,16 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         holder.tvFiliere.setText(student.getFiliere());
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, StudentDetailActivity.class);
-            intent.putExtra("STUDENT_ID", student.getId());
-            context.startActivity(intent);
+            if (onStudentClickListener != null) {
+                onStudentClickListener.onStudentClick(student);
+            } else {
+                Intent intent = new Intent(context, StudentDetailActivity.class);
+                intent.putExtra("STUDENT_ID", student.getId());
+                context.startActivity(intent);
+            }
         });
 
+        holder.btnEdit.setVisibility(showEditButton ? View.VISIBLE : View.GONE);
         holder.btnEdit.setOnClickListener(v -> {
             Intent intent = new Intent(context, AddStudentActivity.class);
             intent.putExtra("STUDENT_ID", student.getId());

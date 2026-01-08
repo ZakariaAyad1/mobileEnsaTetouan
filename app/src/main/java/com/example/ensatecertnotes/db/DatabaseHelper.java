@@ -15,7 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "certifnotes.db";
     // Si vous modifiez db.sql, incrémentez cette version pour forcer la mise à jour
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String TAG = "DatabaseHelper";
     private final Context context;
 

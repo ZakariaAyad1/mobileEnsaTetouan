@@ -30,6 +30,8 @@
         <activity android:name=".ui.prof.ManageStudentsActivity" />
         <activity android:name=".ui.prof.AddStudentActivity" />
         <activity android:name=".ui.prof.StudentDetailActivity" />
+        <activity android:name=".ui.prof.ManageModulesActivity" />
+        <activity android:name=".ui.prof.EnrollStudentActivity" />
 
     </application>
 
