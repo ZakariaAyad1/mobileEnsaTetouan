@@ -1,0 +1,7 @@
+<resources>
+    <string-array name="student_sort_options">
+        <item>Nom (A-Z)</item>
+        <item>Nom (Z-A)</item>
+        <item>CNE</item>
+    </string-array>
+</resources>
