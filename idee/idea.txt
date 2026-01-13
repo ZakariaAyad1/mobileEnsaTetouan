@@ -1,0 +1,65 @@
+1 Organisation G´en´erale
+1.1 Principe
+Le projet est une application mobile unique divis´ee en 3 modules ind´ependants :
+— Module Professeur
+— Module Etudiant ´
+— Module Administration
+1.2 Ind´ependance des Tˆaches
+— Chaque membre travaille sur son module sans d´ependre des autres
+— Configuration initiale
+— D´eveloppement parall`ele
+— Int´egration finale
+2 Phase 1 : Configuration Commune
+2.1 A faire ENSEMBLE `
+1. Cr´eer le projet Android
+2. D´efinir les mod`eles de donn´ees (User, Module, Note, Certificat...)
+3. Configurer la base de donn´ees
+4. Cr´eer l’´ecran d’accueil (s´election du rˆole : Professeur/Etudiant/Admin) ´
+5. Mettre en place Git et les branches
+3 Phase 2 : D´eveloppement Ind´ependant
+3.1 1 - Module Professeur
+3.1.1 Ecrans `a d´evelopper (6 ´ecrans) ´
+1. Login Professeur : Authentification
+2. Dashboard : Vue d’ensemble avec liste des modules
+3. Liste Etudiants ´ : Affichage des ´etudiants par module
+4. Saisie Notes : Formulaire de saisie des notes
+5. Historique : Consultation des notes saisies
+6. Profil : Informations personnelles
+3.1.2 Fonctionnalit´es principales
+— Connexion avec email/mot de passe
+— Consultation de la liste des modules enseign´es
+— Saisie et validation des notes (0-20)
+— Calcul automatique des moyennes
+— Modification des notes d´ej`a saisies
+
+3.2 2 - Module Etudiant ´
+3.2.1 Ecrans `a d´evelopper (7 ´ecrans) ´
+1. Login Etudiant ´ : Authentification
+2. Dashboard : Vue d’ensemble avec moyenne g´en´erale
+3. Consultation Notes : Notes par semestre (avec onglets)
+4. D´etail Module : Notes d´etaill´ees d’un module
+5. Graphiques : Evolution et statistiques ´
+6. Demande Certificat : Formulaire de demande
+7. Profil : Informations personnelles
+3.2.2 Fonctionnalit´es principales
+— Connexion avec CNE/mot de passe
+— Consultation des notes par semestre
+— Visualisation graphique des r´esultats
+— Demande de certificats en ligne
+— Suivi des demandes de certificats
+3.3 3 - Module Administration
+3.3.1 Ecrans `a d´evelopper (8 ´ecrans) ´
+1. Login Admin : Authentification
+2. Dashboard Agent : Statistiques et demandes
+3. Liste Demandes : Toutes les demandes de certificats
+4. Validation : Valider/Rejeter une demande
+5. Archive : Historique des certificats
+6. Dashboard Manager : Gestion certifications professionnelles
+7. Cr´eation Certification : Formulaire nouvelle certification
+8. Gestion Participants : Liste et suivi des inscrits
+3.3.2 Fonctionnalit´es principales
+— Connexion avec rˆole (Agent/Manager)
+— Validation des demandes de certificats
+— G´en´eration automatique de PDF
+— Gestion des certifications professionnelles
+— Distribution des certificats obtenus

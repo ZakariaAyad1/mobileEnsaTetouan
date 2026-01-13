@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">EnsateCertNotes</string>
+    <string-array name="statut_filter_array">
+    <item>TOUS</item>
+    <item>EN_ATTENTE</item>
+    <item>VALIDE</item>
+    <item>REJETE</item>
+</string-array>
+<string-array name="filieres_array">
+        <item>Génie Informatique</item>
+        <item>Génie Civil</item>
+        <item>Génie Électrique</item>
+        <item>Génie Mécanique</item>
+        <item>Génie Industriel</item>
+        <item>Génie des Procédés</item>
+        <item>Génie Énergétique</item>
+        <item>Génie Télécommunications</item>
+    </string-array>
+
+    <string-array name="annees_array">
+        <item>1ère année</item>
+        <item>2ème année</item>
+        <item>3ème année</item>
+    </string-array>
+</resources>
