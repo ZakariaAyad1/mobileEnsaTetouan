@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/tv_header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saisie des Notes"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#3F51B5"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/tv_student_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Étudiant : Nom Prénom (CNE)"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="32dp"
+            android:padding="16dp"
+            android:background="#F0F0F0"/>
+
+        <!-- Note Examen -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note Examen / 20"
+            android:layout_marginBottom="8dp"/>
+        <EditText
+            android:id="@+id/et_note_examen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Ex: 14.5"
+            android:background="@android:drawable/edit_text"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Note TD -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note TD / 20"
+            android:layout_marginBottom="8dp"/>
+        <EditText
+            android:id="@+id/et_note_td"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Ex: 16"
+            android:background="@android:drawable/edit_text"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Note TP -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note TP / 20"
+            android:layout_marginBottom="8dp"/>
+        <EditText
+            android:id="@+id/et_note_tp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Ex: 15"
+            android:background="@android:drawable/edit_text"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Note Finale -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="24dp"
+            android:gravity="center_vertical"
+            android:background="#E8F5E9"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Note Finale Calculée :"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/tv_note_finale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-- / 20"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#388E3C"/>
+        </LinearLayout>
+
+        <!-- Observation -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Observation (Facultatif)"
+            android:layout_marginBottom="8dp"/>
+        <EditText
+            android:id="@+id/et_observation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:gravity="top|start"
+            android:hint="R.A.S"
+            android:background="@android:drawable/edit_text"
+            android:layout_marginBottom="32dp"/>
+
+        <Button
+            android:id="@+id/btn_save_note"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Enregistrer la Note"
+            android:backgroundTint="#3F51B5"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+</ScrollView>

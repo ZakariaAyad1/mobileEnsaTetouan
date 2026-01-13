@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ensa_background"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mes Résultats"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/ensa_primary"
+        android:padding="20dp"
+        android:background="#FCFCFC"
+        android:elevation="4dp" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout_semesters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:tabMode="scrollable"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/ensa_secondary"
+        app:tabSelectedTextColor="@color/ensa_primary"
+        app:tabTextColor="@color/ensa_text_secondary"
+        app:tabRippleColor="#2E1A237E" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager_semesters"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp" />
+
+</LinearLayout>
+<!--salma-->

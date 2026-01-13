@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment_activity_dashboard"
+        android:name="com.example.ensatecertnotes.ui.student.HomeFragment_etudiant"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_home_etudiant" />
+
+    <!-- salma -->
+    <FrameLayout
+        android:id="@+id/layout_notification_student"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="8dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:elevation="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_notification_ring_student"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_popup_reminder"
+            android:contentDescription="Notifications"
+            android:tint="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/tv_notification_badge_student"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:background="@drawable/bg_badge_etudiant"
+            android:gravity="center"
+            android:minWidth="18dp"
+            android:minHeight="18dp"
+            android:text="0"
+            android:textColor="@android:color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+    </FrameLayout>
+    <!-- salma -->
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="@color/white"
+        app:itemIconTint="@color/state_nav_item"
+        app:itemTextColor="@color/state_nav_item"
+        app:itemRippleColor="@color/ensa_secondary"
+        android:elevation="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/menu_bottom_nav_etudiant" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+<!--salma-->

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.EnsateCertNotes">
+
+        <activity
+            android:name=".ui.auth.RoleSelectionActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.auth.LoginActivity" />
+        <activity android:name=".ui.prof.ProfDashboardActivity" />
+        <activity android:name=".ui.prof.ListeEtudiantsActivity" />
+        <activity android:name=".ui.prof.SaisieNoteActivity" />
+        <activity android:name=".ui.prof.ModuleStatsActivity" />
+        <activity android:name=".ui.prof.AddModuleActivity" />
+        <activity android:name=".ui.prof.ManageStudentsActivity" />
+        <activity android:name=".ui.prof.AddStudentActivity" />
+        <activity android:name=".ui.prof.StudentDetailActivity" />
+        <activity android:name=".ui.prof.ManageModulesActivity" />
+        <activity android:name=".ui.prof.EnrollStudentActivity" />
+
+        <!--salma: Student Module Activities-->
+        <activity 
+            android:name=".ui.student.LoginEtudiantActivity_etudiant"
+            android:exported="true" />
+        <activity 
+            android:name=".ui.student.DashboardEtudiant_etudiant"
+            android:parentActivityName=".ui.auth.RoleSelectionActivity" />
+        <activity 
+            android:name=".ui.student.ConsultationNotesActivity_etudiant"
+            android:parentActivityName=".ui.student.DashboardEtudiant_etudiant" />
+        <activity 
+            android:name=".ui.student.DetailModuleActivity_etudiant"
+            android:parentActivityName=".ui.student.ConsultationNotesActivity_etudiant" />
+        <activity 
+            android:name=".ui.student.DemandeCertificatActivity_etudiant"
+            android:parentActivityName=".ui.student.DashboardEtudiant_etudiant" />
+        <activity 
+            android:name=".ui.student.SuiviDemandesActivity_etudiant"
+            android:parentActivityName=".ui.student.DemandeCertificatActivity_etudiant" />
+        <activity 
+            android:name=".ui.student.DemandeDiplomeActivity_etudiant"
+            android:parentActivityName=".ui.student.DashboardEtudiant_etudiant" />
+        <activity 
+            android:name=".ui.student.ProfilEtudiantActivity_etudiant"
+            android:parentActivityName=".ui.student.DashboardEtudiant_etudiant" />
+        <!--salma: End Student Module Activities-->
+
+        <!-- Module Admin -->
+<activity android:name=".ui.admin.LoginAdminActivity" />
+<activity android:name=".ui.admin.DashboardAdminActivity" />
+<activity android:name=".ui.admin.ListeDemandesActivity" />
+<activity android:name=".ui.admin.GestionEtudiantsActivity" />
+<activity android:name=".ui.admin.ProfilAdminActivity" />
+<activity android:name=".ui.admin.NotificationActivity_etudiant" />   <!-- salma -->
+
+    </application>
+
+</manifest>
